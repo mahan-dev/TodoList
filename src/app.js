@@ -8,6 +8,11 @@
   /*** Constants ***/
   const STORAGE_KEY = 'todoit.todos';
   const STATUS_ORDER = ['todo', 'inProgress', 'done']; // order of columns
+  const STATUS_COLORS = {
+    todo: '#e0f7fa',        // light cyan
+    inProgress: '#fff3e0', // light orange
+    done: '#e8f5e9'        // light green
+  };
 
   /*** State ***/
   const state = {
@@ -21,6 +26,7 @@
     categorySelect: document.getElementById('todo-category'),
     descriptionInput: document.getElementById('todo-description'),
     addButton: document.getElementById('add-todo-btn'),
+    form: document.getElementById('todo-form'),
     lists: {
       todo: document.getElementById('list-todo'),
       inProgress: document.getElementById('list-inProgress'),
@@ -55,7 +61,7 @@
 
   function createTodoElement(todo) {
     const item = document.createElement('div');
-    item.className = 'todo-item';
+    item.className = `todo-item todo-${todo.category}`; // add status‑specific class
     item.dataset.id = todo.id;
 
     const title = document.createElement('strong');
@@ -206,6 +212,10 @@
   function init() {
     loadTodos();
     renderTodos();
+
+    // Prevent form submission (Enter key) from reloading the page
+    dom.form.addEventListener('submit', e => e.preventDefault());
+
     dom.addButton.addEventListener('click', addTodo);
   }
 
