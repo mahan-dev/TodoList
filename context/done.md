@@ -1,4 +1,3 @@
 # Done :
 
--App Ui
--Add functionality
+- todo button added

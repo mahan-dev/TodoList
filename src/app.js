@@ -1,5 +1,5 @@
 // src/app.js
-// TodoIt – addTodo feature with LocalStorage persistence
+// TodoIt – addTodo feature with LocalStorage persistence and Back/Next navigation
 // Clean, modular code following the guidelines in Architecture.md and rules.md
 
 (() => {
@@ -7,6 +7,7 @@
 
   /*** Constants ***/
   const STORAGE_KEY = 'todoit.todos';
+  const STATUS_ORDER = ['todo', 'inProgress', 'done']; // order of columns
 
   /*** State ***/
   const state = {
@@ -67,11 +68,33 @@
       item.appendChild(desc);
     }
 
+    // Back button
+    const backBtn = document.createElement('button');
+    backBtn.type = 'button';
+    backBtn.textContent = '←';
+    backBtn.title = 'Back';
+    backBtn.style.marginRight = '0.3rem';
+    backBtn.disabled = STATUS_ORDER.indexOf(todo.category) === 0; // disable on first column
+    backBtn.addEventListener('click', () => moveTodo(todo.id, 'back'));
+    item.appendChild(backBtn);
+
+    // Next button
+    const nextBtn = document.createElement('button');
+    nextBtn.type = 'button';
+    nextBtn.textContent = '→';
+    nextBtn.title = 'Next';
+    nextBtn.disabled = STATUS_ORDER.indexOf(todo.category) === STATUS_ORDER.length - 1; // disable on last column
+    nextBtn.addEventListener('click', () => moveTodo(todo.id, 'next'));
+    item.appendChild(nextBtn);
+
     // Delete button – optional but useful for testing
     const delBtn = document.createElement('button');
     delBtn.type = 'button';
     delBtn.textContent = '✕';
     delBtn.title = 'Delete';
+    delBtn.style.position = 'absolute';
+    delBtn.style.top = '0.4rem';
+    delBtn.style.right = '0.4rem';
     delBtn.addEventListener('click', () => removeTodo(todo.id));
     item.appendChild(delBtn);
 
@@ -122,6 +145,22 @@
     saveTodos();
     renderTodos();
     resetForm();
+  }
+
+  /*** Navigation – Back / Next ***/
+  function moveTodo(id, direction) {
+    const todo = state.todos.find(t => t.id === id);
+    if (!todo) return;
+
+    const currentIdx = STATUS_ORDER.indexOf(todo.category);
+    if (direction === 'back' && currentIdx > 0) {
+      todo.category = STATUS_ORDER[currentIdx - 1];
+    } else if (direction === 'next' && currentIdx < STATUS_ORDER.length - 1) {
+      todo.category = STATUS_ORDER[currentIdx + 1];
+    }
+
+    saveTodos();
+    renderTodos();
   }
 
   /*** Optional Helper – Remove Todo (kept for testing) ***/
