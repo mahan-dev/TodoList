@@ -10,6 +10,8 @@
   --color-primary-dark: #218838;
   --color-danger: #e74c3c;
   --color-danger-dark: #c0392b;
+  --color-warning: #ffc107;
+  --color-warning-dark: #e0a800;
   --color-header-bg: #ffffff;
   --color-card-bg: #ffffff;
   --color-card-border: #e0e0e0;
@@ -166,8 +168,46 @@ body {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
 }
 
-/* Delete button */
-.todo-item button {
+/* Navigation buttons (Back / Next) */
+.todo-item .nav-btn {
+  margin-right: 0.3rem;
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background var(--transition), transform var(--transition);
+}
+
+.todo-item .nav-btn:hover,
+.todo-item .nav-btn:focus {
+  background: var(--color-primary-dark);
+  transform: scale(1.05);
+}
+
+/* Edit button */
+.todo-item .edit-btn {
+  background: var(--color-warning);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  margin-right: 0.3rem;
+  transition: background var(--transition), transform var(--transition);
+}
+
+.todo-item .edit-btn:hover,
+.todo-item .edit-btn:focus {
+  background: var(--color-warning-dark);
+  transform: scale(1.05);
+}
+
+/* Delete button – positioned in the top‑right corner */
+.todo-item .delete-btn {
   position: absolute;
   top: 0.4rem;
   right: 0.4rem;
@@ -181,8 +221,8 @@ body {
   transition: background var(--transition), transform var(--transition);
 }
 
-.todo-item button:hover,
-.todo-item button:focus {
+.todo-item .delete-btn:hover,
+.todo-item .delete-btn:focus {
   background: var(--color-danger-dark);
   transform: scale(1.1);
 }

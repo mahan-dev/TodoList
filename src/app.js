@@ -1,5 +1,5 @@
 // src/app.js
-// TodoIt – addTodo feature with LocalStorage persistence and Back/Next navigation
+// TodoIt – addTodo feature with LocalStorage persistence, Back/Next navigation, and Edit functionality
 // Clean, modular code following the guidelines in Architecture.md and rules.md
 
 (() => {
@@ -11,7 +11,8 @@
 
   /*** State ***/
   const state = {
-    todos: [] // each todo: { id, title, category, description }
+    /** each todo: { id, title, category, description } */
+    todos: []
   };
 
   /*** DOM References ***/
@@ -36,7 +37,6 @@
     }
     try {
       const parsed = JSON.parse(raw);
-      // Ensure we have an array
       state.todos = Array.isArray(parsed) ? parsed : [];
     } catch (e) {
       console.error('Failed to parse todos from LocalStorage:', e);
@@ -68,33 +68,41 @@
       item.appendChild(desc);
     }
 
-    // Back button
+    // Back button (modern style)
     const backBtn = document.createElement('button');
     backBtn.type = 'button';
+    backBtn.className = 'nav-btn back-btn';
     backBtn.textContent = '←';
     backBtn.title = 'Back';
-    backBtn.style.marginRight = '0.3rem';
-    backBtn.disabled = STATUS_ORDER.indexOf(todo.category) === 0; // disable on first column
+    backBtn.disabled = STATUS_ORDER.indexOf(todo.category) === 0;
     backBtn.addEventListener('click', () => moveTodo(todo.id, 'back'));
     item.appendChild(backBtn);
 
-    // Next button
+    // Next button (modern style)
     const nextBtn = document.createElement('button');
     nextBtn.type = 'button';
+    nextBtn.className = 'nav-btn next-btn';
     nextBtn.textContent = '→';
     nextBtn.title = 'Next';
-    nextBtn.disabled = STATUS_ORDER.indexOf(todo.category) === STATUS_ORDER.length - 1; // disable on last column
+    nextBtn.disabled = STATUS_ORDER.indexOf(todo.category) === STATUS_ORDER.length - 1;
     nextBtn.addEventListener('click', () => moveTodo(todo.id, 'next'));
     item.appendChild(nextBtn);
+
+    // Edit button
+    const editBtn = document.createElement('button');
+    editBtn.type = 'button';
+    editBtn.className = 'edit-btn';
+    editBtn.textContent = '✎';
+    editBtn.title = 'Edit';
+    editBtn.addEventListener('click', () => editTodo(todo.id));
+    item.appendChild(editBtn);
 
     // Delete button – optional but useful for testing
     const delBtn = document.createElement('button');
     delBtn.type = 'button';
+    delBtn.className = 'delete-btn';
     delBtn.textContent = '✕';
     delBtn.title = 'Delete';
-    delBtn.style.position = 'absolute';
-    delBtn.style.top = '0.4rem';
-    delBtn.style.right = '0.4rem';
     delBtn.addEventListener('click', () => removeTodo(todo.id));
     item.appendChild(delBtn);
 
@@ -157,6 +165,30 @@
       todo.category = STATUS_ORDER[currentIdx - 1];
     } else if (direction === 'next' && currentIdx < STATUS_ORDER.length - 1) {
       todo.category = STATUS_ORDER[currentIdx + 1];
+    }
+
+    saveTodos();
+    renderTodos();
+  }
+
+  /*** Edit Todo ***/
+  function editTodo(id) {
+    const todo = state.todos.find(t => t.id === id);
+    if (!todo) return;
+
+    const newTitle = prompt('Edit title:', todo.title);
+    if (newTitle === null) return; // user cancelled
+    const trimmedTitle = newTitle.trim();
+    if (!trimmedTitle) {
+      alert('Title cannot be empty.');
+      return;
+    }
+
+    const newDesc = prompt('Edit description (optional):', todo.description || '');
+    // newDesc can be null (cancel) – keep existing description in that case
+    todo.title = trimmedTitle;
+    if (newDesc !== null) {
+      todo.description = newDesc.trim();
     }
 
     saveTodos();
