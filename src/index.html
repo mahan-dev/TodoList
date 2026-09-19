@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TodoIt</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <h1>TodoIt</h1>
+    </header>
+
+    <main>
+      <!-- Form -->
+      <section class="todo-form">
+        <form id="todo-form" autocomplete="off">
+          <div class="form-group">
+            <label for="todo-title">Todo name</label>
+            <input type="text" id="todo-title" placeholder="Enter todo name" required />
+          </div>
+
+          <div class="form-group">
+            <label for="todo-category">Category</label>
+            <select id="todo-category">
+              <option value="todo">Todo</option>
+              <option value="inProgress">In Progress</option>
+              <option value="done">Done</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="todo-description">Description (optional)</label>
+            <textarea id="todo-description" rows="3" placeholder="Add a description..."></textarea>
+          </div>
+
+          <button type="button" id="add-todo-btn">Add</button>
+        </form>
+      </section>
+
+      <!-- Columns -->
+      <section class="columns">
+        <article class="column" data-status="todo">
+          <h2>Todo</h2>
+          <div class="todo-list" id="list-todo"></div>
+        </article>
+
+        <article class="column" data-status="inProgress">
+          <h2>In Progress</h2>
+          <div class="todo-list" id="list-inProgress"></div>
+        </article>
+
+        <article class="column" data-status="done">
+          <h2>Done</h2>
+          <div class="todo-list" id="list-done"></div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
