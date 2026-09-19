@@ -18,26 +18,25 @@
       <section class="todo-form">
         <form id="todo-form" autocomplete="off">
           <div class="form-group">
-            <label for="titleInput">Todo name</label>
-            <input type="text" id="titleInput" placeholder="Enter todo name" required />
+            <label for="todo-title">Todo name</label>
+            <input type="text" id="todo-title" placeholder="Enter todo name" required />
           </div>
 
           <div class="form-group">
-            <label for="categorySelect">Category</label>
-            <select id="categorySelect">
+            <label for="todo-category">Category</label>
+            <select id="todo-category">
               <option value="todo">Todo</option>
               <option value="inProgress">In Progress</option>
               <option value="done">Done</option>
             </select>
           </div>
 
-          <div class="form-group description-group">
-            <label for="descriptionInput">Description (optional)</label>
-            <textarea id="descriptionInput" rows="3" placeholder="Add a description..."></textarea>
+          <div class="form-group">
+            <label for="todo-description">Description (optional)</label>
+            <textarea id="todo-description" rows="3" placeholder="Add a description..."></textarea>
           </div>
 
-          <!-- Add button placed at the end of the form -->
-          <button type="button" id="addButton">Add</button>
+          <button type="button" id="add-todo-btn">Add</button>
         </form>
       </section>
 

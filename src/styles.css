@@ -175,6 +175,11 @@ body {
   transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
 }
 
+.todo-item strong {
+    display: block;
+    width: 100%;
+}
+
 /* Status‑specific background colors */
 .todo-item.todo-todo {
   background: #e0f7fa;        /* light cyan */
