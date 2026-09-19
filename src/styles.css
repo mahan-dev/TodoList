@@ -78,6 +78,28 @@ body {
   gap: 1rem;
 }
 
+/* Ensure the button always spans the full width and appears at the end */
+.todo-form button {
+  grid-column: 1 / -1;          /* full‑width across the grid */
+  align-self: end;
+  padding: 0.6rem 1.2rem;
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+  margin-top: 0.5rem;          /* small space above the button */
+}
+
+.todo-form button:hover,
+.todo-form button:focus {
+  background: var(--color-primary-dark);
+  transform: translateY(-2px);
+}
+
+/* Form groups */
 .form-group {
   display: flex;
   flex-direction: column;
@@ -90,6 +112,7 @@ body {
   color: #555;
 }
 
+/* Inputs, selects, textarea */
 .form-group input,
 .form-group select,
 .form-group textarea {
@@ -98,6 +121,8 @@ body {
   border-radius: var(--radius);
   font-size: 0.95rem;
   transition: border-color var(--transition);
+  width: 100%;
+  resize: vertical;
 }
 
 .form-group input:focus,
@@ -105,26 +130,6 @@ body {
 .form-group textarea:focus {
   outline: none;
   border-color: var(--color-primary);
-}
-
-/* Add button */
-.todo-form button {
-  grid-column: span 2;
-  align-self: end;
-  padding: 0.6rem 1.2rem;
-  background: var(--color-primary);
-  color: #fff;
-  border: none;
-  border-radius: var(--radius);
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background var(--transition), transform var(--transition);
-}
-
-.todo-form button:hover,
-.todo-form button:focus {
-  background: var(--color-primary-dark);
-  transform: translateY(-2px);
 }
 
 /* Columns */
@@ -234,7 +239,7 @@ body {
   }
 
   .todo-form button {
-    grid-column: 1;
+    grid-column: 1 / -1;
   }
 
   .columns {
