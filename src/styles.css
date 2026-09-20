@@ -203,7 +203,7 @@ body {
 .todo-item .nav-btn {
   margin-right: 0.3rem;
   background: var(--color-primary);
-  color: #fff;
+  color: #fff; 
   border: none;
   border-radius: var(--radius);
   padding: 0.2rem 0.5rem;
